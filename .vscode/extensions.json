@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "dzannotti.vscode-babel-coloring",
+    "streetsidesoftware.code-spell-checker",
+    "xabikos.JavaScriptSnippets",
+    "naumovs.node-modules-resolve",
+    "vsmobile.vscode-react-native",
+    "waderyan.gitblame",
+    "alefragnani.project-manager",
+    "peterjuras.sort-imports"
+  ]
+}
