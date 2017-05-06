@@ -15,7 +15,7 @@ import { push } from 'react-router-redux';
   }
 )
 export default class PageB extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
   }
 
@@ -27,9 +27,9 @@ export default class PageB extends Component {
    * 2 这是服务端渲染(`server render`)中唯一调用的钩子(hook);
    * 3* 通常情况下，推荐用`constructor()`方法代替;
    */
-  componentWillMount = async () => {
+  componentWillMount = () => {
     console.log('start componentWillMount:', new Date());
-    await Timer.sleep(1000);
+    // 不建议使用
     console.log('end componentWillMount:', new Date());
   }
 
@@ -44,6 +44,7 @@ export default class PageB extends Component {
    */
   componentDidMount = async () => {
     console.log('start componentDidMount:', new Date());
+    // 用来获取服务器数据
     await Timer.sleep(1000);
     console.log('end componentDidMount:', new Date());
   }
@@ -59,9 +60,10 @@ export default class PageB extends Component {
    * 2 如果你只是调用`this.setState()`而不是从外部传入`props`, 那么不会触发`componentWillReceiveProps(nextProps)`函数；这就意味着: `this.setState()`方法不会触发`componentWillReceiveProps()`, `props`的改变或者`props`没有改变才会触发这个方法;
    * 3* 这里只建议有必要的 this.setState操作,不应该有 redux 操作,复杂的业务逻辑
    */
-  componentWillReceiveProps = async (nextProps) => {
+  componentWillReceiveProps = (nextProps) => {
     console.log('start componentWillReceiveProps:', new Date());
-    await Timer.sleep(1000);
+    // 只有需要更新 state 时才应该实现
+    // this.setState();
     console.log('end componentWillReceiveProps:', new Date());
   }
 
@@ -78,9 +80,9 @@ export default class PageB extends Component {
    * Good Idea
    * 在React 15.3以后, `React.PureComponent`已经支持使用，个人推荐，它代替了(或者说合并了)`pure-render-mixin`，实现了`shallowCompare()`。[扩展阅读](在React.js 中使用PureComponent的重要性和使用方式 - 众成翻译)
    */
-  shouldComponentUpdate = async (nextProps, nextState) => {
+  shouldComponentUpdate = (nextProps, nextState) => {
     console.log('start shouldComponentUpdate:', new Date());
-    await Timer.sleep(1000);
+    // 如果大量重复刷新,建议实现优化
     console.log('end shouldComponentUpdate:', new Date());
   }
 
@@ -95,9 +97,9 @@ export default class PageB extends Component {
    * 3 如果`shouldComponentUpdate(nextProps, nextState)`返回`false`，那么`componentWillUpdate()`不会被触发;
    * 4* 暂时没想到应用场景,不建议使用
    */
-  componentWillUpdate = async (nextProps, nextState)=> {
+  componentWillUpdate = (nextProps, nextState) => {
     console.log('start componentWillUpdate:', new Date());
-    await Timer.sleep(1000);
+    // 暂时没想到应用场景,不建议使用
     console.log('end componentWillUpdate:', new Date());
   }
 
@@ -113,6 +115,9 @@ export default class PageB extends Component {
    */
   componentDidUpdate = async (prevProps, prevState) => {
     console.log('start componentDidUpdate:', new Date());
+    // 网络请求
+    // redux 操作
+    // 通知父组件刷新
     await Timer.sleep(1000);
     console.log('end componentDidUpdate:', new Date());
   }
@@ -123,16 +128,18 @@ export default class PageB extends Component {
    * 解释
    * 这个方法可以让你处理一些必要的清理操作，比如无效的timers、interval，或者取消网络请求，或者清理任何在`componentDidMount()`中创建的DOM元素(elements);
    */
-  componentWillUnmount =async () => {
+  componentWillUnmount = () => {
     console.log('start componentWillUnmount:', new Date());
-    await Timer.sleep(1000);
+    // clearState
+    // removeListener
+    // clearTimer
     console.log('end componentWillUnmount:', new Date());
   }
 
   render = () => {
     console.warn(this.props)
     return (
-       <div>
+      <div>
         moduleA-pageB
       </div>
     );
