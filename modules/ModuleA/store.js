@@ -1,14 +1,18 @@
+import * as redux from 'react-redux';
+
+import { ConnectedRouter, push, routerMiddleware, routerReducer } from 'react-router-redux'
 import { applyMiddleware, compose, createStore } from 'redux';
 
-import createHistory from 'history/lib/createBrowserHistory';
+import createHistory from 'history/createBrowserHistory';
 import { createLogger } from 'redux-logger';
-import { reduxReactRouter } from 'redux-router';
 import rootReducer from './reducer';
 import thunk from 'redux-thunk';
 
+export const history = createHistory()
+
 const finalCreateStore = compose(
+  applyMiddleware(routerMiddleware(history)),
   applyMiddleware(thunk),
-  reduxReactRouter({ createHistory }),
   applyMiddleware(createLogger())
 )(createStore);
 
@@ -20,6 +24,19 @@ if (module.hot) {
     const nextReducer = require('./reducer');
     store.replaceReducer(nextReducer);
   });
+}
+
+export const connect = (...args) => {
+  const getProps = args[0]
+
+  args[0]=()=> {
+    const props = getProps();
+    props.i18n = 'null';
+    props.dispatch = store.dispatch;
+    return props;
+  };
+
+  return redux.connect(...args);
 }
 
 export default store;

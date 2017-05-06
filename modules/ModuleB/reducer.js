@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routerStateReducer as router } from 'redux-router';
+import { routerReducer as router } from 'react-router-redux';
 
 const rootReducer = combineReducers({
   router,

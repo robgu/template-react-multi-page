@@ -2,7 +2,7 @@ import { IndexRedirect, IndexRoute, Route } from 'react-router';
 import React, { Component } from 'react';
 
 import { Provider } from 'react-redux';
-import { ReduxRouter } from 'redux-router';
+import { ReduxRouter } from 'react-router-redux';
 
 export default class PageA extends Component {
   render = () => {
